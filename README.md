@@ -2,7 +2,7 @@
 
 This repository provides the FMFReg implementation for the paper **Non-rigid Medical Image Registration Method Driven by Structure-aware Features from Foundation Models**, published in **Acta Automatica Sinica (Chinese Edition)**.
 
-The code supports two workflows for 3D medical image registration: ACDC cardiac MRI and AbdomenReg abdominal CT.
+The code supports two workflows for 3D medical image registration: ACDC cardiac MRI and Abdomen CT.
 
 DINOv3 serves as a pretrained feature extractor. Registration training reads precomputed `.npy` features; it does not extract features again or update DINOv3.
 
@@ -56,7 +56,7 @@ data/acdcreg/
     └── ...
 ```
 
-### AbdomenReg
+### Abdomen
 
 The input images and labels used in the current experiments have a size of `(192, 160, 256)`. The DataLoader downsamples them to `(96, 80, 128)`. Label indices range from `0` to `13`, with `0` denoting background.
 
@@ -122,7 +122,7 @@ python extract_dinov3_features.py \
   --local-files-only
 ```
 
-### Extract All AbdomenReg Features
+### Extract All Abdomen Features
 
 ```bash
 python extract_dinov3_features.py \
@@ -161,7 +161,7 @@ python train_registration_ACDC.py \
   --num_workers 0
 ```
 
-### AbdomenReg
+### Abdomen
 
 ```bash
 python train_registration_abdomen.py \
@@ -206,7 +206,7 @@ python test_cardiacreg.py \
   --is_save 0
 ```
 
-### AbdomenReg Validation Set
+### Abdomen Validation Set
 
 ```bash
 python test_abdomenreg.py \
@@ -240,7 +240,7 @@ python test_cardiacreg.py \
 
 For ACDC, registration is performed in both directions between ED and ES, and the results are aggregated for each subject.
 
-### Abdomen CT
+### Abdomen 
 
 ```bash
 python test_abdomenreg.py \
