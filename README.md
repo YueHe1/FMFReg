@@ -13,8 +13,7 @@ DINOv3 serves as a pretrained feature extractor. Registration training reads pre
 - [Downloading Official DINOv3 Weights](#downloading-official-dinov3-weights)
 - [Step 1: Feature Extraction](#step-1-feature-extraction)
 - [Step 2: Training and Validation During Training](#step-2-training-and-validation-during-training)
-- [Step 3: Standalone Validation](#step-3-standalone-validation)
-- [Step 4: Test Set Evaluation](#step-4-test-set-evaluation)
+- [Step 3: Test Set Evaluation](#step-4-test-set-evaluation)
 - [Parameters and Paths](#parameters-and-paths)
 - [Acknowledgments](#acknowledgments)
 
@@ -188,39 +187,7 @@ For a new experiment, use a name such as `--model dinov3IR_acdc_run1` or `--mode
 
 The abdomen DataLoader caches preprocessed images, labels, and features under `<DATA_ROOT>/abdomenreg/cache/`. The cache path is managed in `loaders/abdomenreg_loader.py`. When changing the features or preprocessing settings, clear the corresponding old cache or configure a new cache directory in that DataLoader to ensure that the new features are used.
 
-## Step 3: Standalone Validation
-
-The `eval DSC` reported during training is used to select checkpoints. To compute additional validation metrics, such as HD95 and deformation field metrics, and save a CSV file for a selected checkpoint, run the evaluation entry point with `--field_split val`.
-
-### ACDC Validation Set
-
-```bash
-python test_cardiacreg.py \
-  --model dinov3IR_acdc \
-  --datasets_path "$DATA_ROOT" \
-  --features_path "$ACDC_FEATURES" \
-  --load_ckpt best \
-  --field_split val \
-  --start_channel 32 \
-  --num_workers 0 \
-  --is_save 0
-```
-
-### Abdomen Validation Set
-
-```bash
-python test_abdomenreg.py \
-  --model dinov3IR_abdomen \
-  --datasets_path "$DATA_ROOT" \
-  --features_path "$ABDOMEN_FEATURES" \
-  --load_ckpt best \
-  --field_split val \
-  --start_channel 32 \
-  --num_workers 0 \
-  --save 0
-```
-
-## Step 4: Test Set Evaluation
+## Step 3: Test Set Evaluation
 
 After selecting a checkpoint using the validation set, evaluate it on the test set. The commands below load the checkpoint with the highest validation score from the corresponding experiment directory. The test set is not used for model selection.
 
